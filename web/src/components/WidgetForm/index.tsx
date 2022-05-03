@@ -2,7 +2,6 @@ import React from "react";
 import bugImageUrl from "../../assets/bug.svg";
 import ideaImageUrl from "../../assets/idea.svg";
 import thoughtImageUrl from "../../assets/thought.svg";
-import { CloseButton } from "../CloseButton";
 import { FeedbackContentStep } from "./Steps/FeedbackContentStep";
 import { FeedackTypeStep } from "./Steps/FeedbackTypeStep";
 
@@ -35,7 +34,7 @@ export type FeedbackType = keyof typeof feedbackTypes;
 export function WidgetForm() {
   const [feedbackType, setFeedbackType] = React.useState<FeedbackType | null>(null);
 
-  function handleRestartFeedback(){
+  function handleRestartFeedback() {
     setFeedbackType(null)
   }
 
@@ -49,20 +48,20 @@ export function WidgetForm() {
 
       {
         !feedbackType ? (
-          <FeedackTypeStep onFeedbackTypeChanged={setFeedbackType}/>
+          <FeedackTypeStep onFeedbackTypeChanged={setFeedbackType} />
 
-        ): (
-          <FeedbackContentStep 
-          feedbackType={feedbackType}
-          onFeedbackRestartRequested={handleRestartFeedback}
+        ) : (
+          <FeedbackContentStep
+            feedbackType={feedbackType}
+            onFeedbackRestartRequested={handleRestartFeedback}
           />
-  )
+        )
 
-}
+      }
 
-<footer>
-  Feito com ♡ por <a className="underline underline-offset-2" href="http://brainyresults.com">Guilherme</a>
-</footer>
+      <footer className="text-zinc-500 text-sm">
+        Feito com ♡ por <a className="underline underline-offset-2" href="http://brainyresults.com">Guilherme</a>
+      </footer>
     </div >
   )
 
