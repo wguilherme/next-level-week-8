@@ -28,6 +28,7 @@ export function ScreenshotButton({
   if (screenshot) {
     return (
       <button
+        onClick={() => onScreenshotTook(null)}
         className="
       text-zinc-400
       hover:text-zinc-100
