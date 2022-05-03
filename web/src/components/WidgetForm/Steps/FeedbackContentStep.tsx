@@ -1,5 +1,5 @@
 import { ArrowLeft } from 'phosphor-react';
-import { useState } from 'react';
+import { FormEvent, useState } from 'react';
 import { CloseButton } from '../../CloseButton';
 import { ScreenshotButton } from '../ScreenshotButton';
 import { FeedbackType, feedbackTypes } from './../';
@@ -7,16 +7,26 @@ import { FeedbackType, feedbackTypes } from './../';
 interface FeedbackContentStepProps {
   feedbackType: FeedbackType;
   onFeedbackRestartRequested: () => void;
+  onFeedbackSent: () => void,
 }
 
 export function FeedbackContentStep({
   feedbackType,
-  onFeedbackRestartRequested
+  onFeedbackRestartRequested,
+  onFeedbackSent
 }: FeedbackContentStepProps) {
 
   const [screenshot, setScreenshot] = useState<string | null>(null)
+  const [comment, setComment] = useState<string>('')
 
   const feedbackTypeInfo = feedbackTypes[feedbackType];
+
+  function handleSubmitFeedback(e: FormEvent) {
+    e.preventDefault()
+    console.log({ screenshot, comment })
+
+    onFeedbackSent()
+  }
 
   return (
     <>
@@ -44,9 +54,10 @@ export function FeedbackContentStep({
 
       <div className="flex py-8 gap-2 w-full">
 
-        <form className="my-4 w-full">
+        <form className="my-4 w-full" onSubmit={handleSubmitFeedback}>
 
           <textarea
+            onChange={(e) => setComment(e.target.value)}
             className="
             min-w-[304px] w-full min-h-[112px]
             text-sm placeholder-zinc-400 text-zinc-100 border-zinc-600
@@ -62,11 +73,12 @@ export function FeedbackContentStep({
           <footer className='flex gap-2 mt-2'>
 
 
-            <ScreenshotButton 
-            screenshot={screenshot}
-            onScreenshotTook={setScreenshot}/>
+            <ScreenshotButton
+              screenshot={screenshot}
+              onScreenshotTook={setScreenshot} />
 
             <button
+              disabled={comment.length === 0}
               type="submit"
               className="p-2 bg-brand-500 rounded-md border-transparent
             flex-1 flex justify-center items-center
@@ -75,6 +87,8 @@ export function FeedbackContentStep({
             focus:outline-none focus:ring-2 focus:ring-offset-2
             focus:ring-offset-zinc-900 focus:ring-brand-500
             transition-colors
+            disabled:opacity-50 disabled:hover:bg-brand-500
+
             ">
               Enviar feedback
 
