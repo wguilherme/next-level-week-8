@@ -1,12 +1,5 @@
-import { useState } from 'react'
-function App() {
-  const [count, setCount] = useState(0)
+import { Widget } from './components/Widget'
 
-  return (
-    <div className="App">
-      <h2>works</h2>
-    </div>
-  )
+export function App() {
+  return <Widget />
 }
-
-export default App
